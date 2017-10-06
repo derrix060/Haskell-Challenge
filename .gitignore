@@ -1,8 +1,4 @@
-
-src/Main
-
-src/Main\.hi
-
-src/Main\.o
-
 src/files/
+*.o
+*.hi
+src/Main
