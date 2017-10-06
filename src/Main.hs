@@ -21,8 +21,8 @@ main = do
 -- Web routes
 myApp :: ServerPart Response
 myApp = msum
-  [ dir "files"   $ fileServing
-  , dir "upload"  $ upload
+  [ dir "download"    $ fileServing
+  , dir "upload"      $ upload
   , homePage
   ]
 
@@ -35,14 +35,14 @@ template title body = toResponse $
     H.body $ do
       body
 
-
+-- Main Page
 homePage :: ServerPart Response
 homePage =
     ok $ template "home page" $ do
            H.h1 "Hello!"
            H.p "This is a API to upload and download files"
-           H.p $ a ! href "/files"         $ "file serving"
-           H.p $ a ! href "/upload"        $ "file uploads"
+           H.p $ a ! href "/download"         $ "Download one file"
+           H.p $ a ! href "/upload"        $ "Upload one file"
 
 
 echo :: ServerPart Response
