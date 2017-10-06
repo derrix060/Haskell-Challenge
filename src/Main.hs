@@ -12,9 +12,11 @@ import Text.Blaze.Html5.Attributes (action, enctype, href, name, size, type_, va
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 
-
+-- Start server
 main :: IO ()
-main = serve Nothing myApp
+main = do
+    putStrLn "Server running in http://localhost:8000/"
+    serve Nothing myApp
 
 myApp :: ServerPart Response
 myApp = msum
