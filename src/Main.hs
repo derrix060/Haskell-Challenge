@@ -11,6 +11,8 @@ import Text.Blaze.Html5 (Html, (!), a, form, input, p, toHtml, label)
 import Text.Blaze.Html5.Attributes (action, enctype, href, name, size, type_, value)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
+import Download
+import Template
 
 -- Start server
 main :: IO ()
@@ -21,19 +23,12 @@ main = do
 -- Web routes
 myApp :: ServerPart Response
 myApp = msum
-  [ dir "download"    $ fileServing
   , dir "upload"      $ upload
+  [ dir "download"    $ downloadFile
   , homePage
   ]
 
--- Template for every webpage
-template :: Text -> Html -> Response
-template title body = toResponse $
-  H.html $ do
-    H.head $ do
-      H.title (toHtml title)
-    H.body $ do
-      body
+
 
 -- Main Page
 homePage :: ServerPart Response
@@ -104,26 +99,6 @@ fortune = msum [ viewFortune, updateFortune ]
              addCookies [(Session, mkCookie "fortune" (unpack fortune))]
              seeOther ("/fortune" :: String) (toResponse ())
 
-
-fileServing :: ServerPart Response
-fileServing = msum [ downloadForm, handleDownload ]
-  where
-    -- Form to download one file if GET request
-    downloadForm :: ServerPart Response
-    downloadForm =
-        do method GET
-           ok $ template "Download Form" $
-            form ! action "/download" ! enctype "multipart/form-data" ! A.method "POST" $ do
-              label ! A.for "file" $ "Enter the file name: "
-              input ! type_ "text" ! A.id "file" ! name "file"
-              input ! type_ "submit" ! value "Download it!"
-
-    -- Download the file if POST request
-    handleDownload :: ServerPart Response
-    handleDownload =
-        do method POST
-           mFile <- lookText "file"
-           serveDirectory DisableBrowsing ["index.html"] ("./files/" ++ unpack mFile)
 
 
 
