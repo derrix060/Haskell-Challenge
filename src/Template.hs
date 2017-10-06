@@ -1,17 +1,11 @@
-{-# LANGUAGE OverloadedStrings, ScopedTypeVariables #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Template where
 
-import Control.Applicative ((<$>), optional)
-import Data.Maybe (fromMaybe)
 import Data.Text (Text)
-import Data.Text.Lazy (unpack)
 import Happstack.Lite
-import Text.Blaze.Html5 (Html, (!), a, form, input, p, toHtml, label)
-import Text.Blaze.Html5.Attributes (action, enctype, href, name, size, type_, value)
+import Text.Blaze.Html5 (Html, (!), toHtml)
 import qualified Text.Blaze.Html5 as H
-import qualified Text.Blaze.Html5.Attributes as A
-import System.Directory (renameFile)
     
 
 -- Template for every webpage
