@@ -34,3 +34,5 @@ upload =
                 p (toHtml $ "temporary file: " ++ tmpFile) 
                 p (toHtml $ "uploaded name:  " ++ uploadName) 
                 p (toHtml $ "content-type:   " ++ show contentType) 
+    -- TODO: Before send the status, is it necessary save the file, if his hash don't exist already
+
